@@ -12,6 +12,7 @@ import { APP_ROUTES } from './app.routing';
 // Modules
 import { PagesModule } from './pages/pages.module';
 import { FormsModule } from '@angular/forms';
+import { ServiceModule } from './services/service.module';
 
 
 
@@ -27,7 +28,7 @@ import { FormsModule } from '@angular/forms';
     PagesModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ ServiceModule ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
