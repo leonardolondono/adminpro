@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import swal from 'sweetalert2';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class UsuarioService {
   token: string;
 
   constructor( public http: HttpClient,
-               public router: Router ) {
+               public router: Router,
+               public subirA: SubirArchivoService ) {
     this.cargarStorage();
   }
 
@@ -53,7 +55,7 @@ export class UsuarioService {
   }
 
   loginGoogle( token: string ) {
-    let url = URL_SERVICIOS + '/login/google';
+    const url = URL_SERVICIOS + '/login/google';
     return this.http.post( url , { token })
         .pipe(
           map( (resp: any) => {
@@ -71,7 +73,7 @@ export class UsuarioService {
       localStorage.removeItem('email');
     }
 
-    let url = URL_SERVICIOS + '/login';
+    const url = URL_SERVICIOS + '/login';
 
     return this.http.post( url, usuario )
       .pipe(
@@ -83,7 +85,7 @@ export class UsuarioService {
   }
 
   crearUsuario( usuario: Usuario ) {
-    let url = URL_SERVICIOS + '/usuario';
+    const url = URL_SERVICIOS + '/usuario';
 
     return this.http.post( url, usuario )
       .pipe(
@@ -96,6 +98,44 @@ export class UsuarioService {
           return resp.usuario;
         })
       );
+  }
+
+  actualizarUsuario( usuario: Usuario ) {
+    let url = URL_SERVICIOS + '/usuario/' + this.usuario._id;
+    url += '?token=' + this.token;
+
+    return this.http.put( url, usuario)
+      .pipe(
+        map( (resp: any) => {
+          const usuarioDB: Usuario = resp.usuario;
+          swal.fire({
+            title: 'Usuario actualizado',
+            text: 'usuario.nombre',
+            type: 'success'
+          });
+
+          this.guardarStorage( usuarioDB._id, this.token, usuarioDB );
+
+          return true;
+        })
+      );
+  }
+
+  cambiarImagen( archivo: File, id: string ) {
+    this.subirA.subirArchivo( archivo, 'usuarios', id)
+        .then( (resp: any) => {
+          this.usuario.img = resp.usuario.img;
+          swal.fire({
+            title: 'Imagen actualizada',
+            text: this.usuario.nombre,
+            type: 'success'
+          });
+
+          this.guardarStorage( id, this.token, this.usuario );
+        })
+        .catch( resp => {
+          console.log( resp );
+        });
   }
 
 }
