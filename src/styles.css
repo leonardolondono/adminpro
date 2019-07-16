@@ -17,6 +17,30 @@ input {
     width: 150px;
 }
 
+.w50 {
+    width: 50px;
+}
+
+.w70 {
+    width: 70px;
+}
+
+.fondo-negro {
+    background-color: rgba(0,0,0,.4);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.oculto {
+    display: none;
+}
+
+
+
 /* Missing styles */
 
 .input-group .form-control, .input-group-addon, .input-group-btn {
