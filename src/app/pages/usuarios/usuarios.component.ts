@@ -29,7 +29,6 @@ export class UsuariosComponent implements OnInit {
     this.cargando = true;
     this.us.cargarUsuarios( this.desde )
         .subscribe( (resp: any) => {
-          console.log( resp );
           this.totalRegistros = resp.total;
           this.usuarios = resp.usuarios;
           this.cargando = false;
@@ -90,7 +89,6 @@ export class UsuariosComponent implements OnInit {
       if (result.value) {
         this.us.borrarUsuario( usuario._id )
             .subscribe( resp => {
-              console.log( resp );
               this.cargarUsuarios();
             });
       }

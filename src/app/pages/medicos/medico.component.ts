@@ -72,7 +72,6 @@ export class MedicoComponent implements OnInit {
 
     this.hs.obtenerHospital( id )
       .subscribe( hospital => {
-        console.log(hospital);
         this.hospital = hospital;
       })
   }

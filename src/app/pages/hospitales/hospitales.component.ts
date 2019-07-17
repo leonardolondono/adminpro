@@ -41,7 +41,6 @@ export class HospitalesComponent implements OnInit {
     this.cargando = true;
     this.hs.cargarHospitales()
         .subscribe( (resp: any) => {
-          console.log(resp);
           this.hospitales = resp.hospitales;
           this.cargando = false;
         });
@@ -92,7 +91,6 @@ export class HospitalesComponent implements OnInit {
       if ( !resp.value || resp.value.length === 0 ) {
         return;
       }
-      console.log( resp.value );
 
       const hospTemp = new Hospital( resp.value );
 
