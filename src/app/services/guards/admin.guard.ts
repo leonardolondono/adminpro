@@ -12,7 +12,7 @@ export class AdminGuard implements CanActivate {
     public us: UsuarioService
   ) {}
 
-  canActivate(){
+  canActivate() {
     if ( this.us.usuario.role === 'ADMIN_ROLE' ) {
       return true;
     } else {
